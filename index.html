@@ -21,7 +21,10 @@
     --color-subtext: #ccc;
     --color-muted: #aaa;
     --color-footer: #666;
-    --glow-color: rgba(255, 215, 0, 0.7); /* Soft golden glow */
+    --glow-color: rgba(255, 215, 0, 0.7);
+    --countdown-bg: rgba(255 255 255 / 0.1);
+    --countdown-shadow: rgba(0 0 0 / 0.3);
+    --countdown-font: 'Courier New', Courier, monospace;
   }
 
   * {
@@ -64,6 +67,14 @@
     animation: fadeSlideDown 1.8s ease-out forwards;
   }
 
+  /* Responsive for phones: logo 1/2 screen width */
+  @media (max-width: 600px) {
+    .logo-wrapper {
+      width: 50vw;
+      min-width: auto;
+    }
+  }
+
   .logo-wrapper::before {
     content: "";
     position: absolute;
@@ -72,7 +83,7 @@
     filter: blur(12px) brightness(2) drop-shadow(0 0 10px var(--glow-color));
     opacity: 0;
     animation: pulseGlow 3s ease-in-out infinite;
-    animation-delay: 1.8s; /* glow starts right after fade+slide */
+    animation-delay: 1.8s;
     z-index: 0;
     pointer-events: none;
   }
@@ -101,7 +112,7 @@
     50% { opacity: 1; }
   }
 
-  /* Silom font applied ONLY to brand name and slogan */
+  /* Silom font for brand name and slogan */
   .brand-name,
   .slogan {
     font-family: 'Silom', sans-serif;
@@ -134,10 +145,41 @@
     animation: fadeInUp 2s ease-in-out forwards;
   }
 
-  .countdown {
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
-    color: var(--color-muted);
+  /* Countdown styling */
+  #countdown {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    font-family: var(--countdown-font);
+    color: var(--color-text);
+    margin-bottom: 5vh;
+    opacity: 0;
     animation: fadeInUp 2.5s ease-in-out forwards;
+  }
+
+  .countdown-segment {
+    background: var(--countdown-bg);
+    box-shadow: 0 4px 12px var(--countdown-shadow);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    min-width: 65px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .countdown-number {
+    font-size: clamp(2.4rem, 6vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .countdown-label {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: var(--color-subtext);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 0.3rem;
   }
 
   .footer {
@@ -171,21 +213,45 @@
     </div>
 
     <div class="coming-soon">We're launching soon</div>
-    <div class="countdown" id="countdown">Loading...</div>
+    <div id="countdown" aria-label="Countdown to launch" role="timer" aria-live="polite">
+      <div class="countdown-segment">
+        <div class="countdown-number" id="days">0</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-segment">
+        <div class="countdown-number" id="hours">0</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-segment">
+        <div class="countdown-number" id="minutes">0</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-segment">
+        <div class="countdown-number" id="seconds">0</div>
+        <div class="countdown-label">Seconds</div>
+      </div>
+    </div>
   </div>
 
   <div class="footer">© 2025 NetRaw. All rights reserved.</div>
 
   <script>
     const launchDate = new Date("2025-10-10T00:00:00");
-    const countdown = document.getElementById("countdown");
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
 
     function updateCountdown() {
       const now = new Date();
       const diff = launchDate - now;
 
       if (diff <= 0) {
-        countdown.textContent = "We're live!";
+        daysEl.textContent = '0';
+        hoursEl.textContent = '0';
+        minutesEl.textContent = '0';
+        secondsEl.textContent = '0';
+        document.getElementById('countdown').textContent = "We're live!";
         return;
       }
 
@@ -194,7 +260,10 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      countdown.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      daysEl.textContent = days;
+      hoursEl.textContent = hours.toString().padStart(2, '0');
+      minutesEl.textContent = minutes.toString().padStart(2, '0');
+      secondsEl.textContent = seconds.toString().padStart(2, '0');
     }
 
     updateCountdown();
