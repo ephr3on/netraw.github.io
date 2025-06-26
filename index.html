@@ -19,20 +19,21 @@
       --color-muted: #aaa;
       --color-footer: #666;
       --glow-color: #efbf04;
-      --countdown-bg: rgba(255 255 255 / 0.05);
-      --countdown-shadow: rgba(0 0 0 / 0.3);
-      /*--countdown-font: 'Silom', sans-serif;*/
+      --countdown-bg: rgba(255, 255, 255, 0.05);
+      --countdown-shadow: rgba(0, 0, 0, 0.3);
       --gold: #d4af37;
       --pharaoh-blue: #f2f2f2;
       --pharaoh-shadow: rgba(212, 175, 55, 0.4);
     }
 
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     html, body {
-      height: 100vh;
+      height: 100%;
       background: var(--color-bg);
       overscroll-behavior-y: contain;
     }
@@ -45,13 +46,12 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      min-height: 100vh;
       padding: 0 5vw;
     }
 
     .container {
       max-width: 800px;
-      width: 90vw;
+      width: 100%;
     }
 
     .top-section {
@@ -78,7 +78,7 @@
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: url('logo2.png') no-repeat center/contain;
+      background: url('logo3.png') no-repeat center/contain;
       filter: blur(12px) brightness(2) drop-shadow(0 0 10px var(--glow-color));
       opacity: 0;
       animation: pulseGlow 3s ease-in-out infinite;
@@ -88,11 +88,10 @@
     }
 
     .logo {
-      position: relative;
       width: 100%;
       height: auto;
-      display: block;
       z-index: 1;
+      position: relative;
     }
 
     @keyframes fadeSlideDown {
@@ -106,9 +105,7 @@
       66% { opacity: 0; }
     }
 
-    .brand-name,
-    .slogan,
-    .countdown-number {
+    .brand-name, .slogan, .countdown-number {
       font-family: 'Silom', sans-serif;
     }
 
@@ -141,36 +138,21 @@
 
     #countdown {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 1.2rem;
-      font-family: var(--countdown-font);
-      color: var(--color-text);
+      gap: 1rem;
       margin-bottom: 5vh;
       opacity: 0;
       animation: fadeInUp 2.5s ease-in-out forwards;
-      position: relative;
     }
-
-/*    #countdown::before {
-      content: '';
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      height: 10px;
-      background: radial-gradient(circle, var(--gold), transparent);
-      opacity: 0.4;
-      pointer-events: none;
-    }*/
 
     .countdown-segment {
       background: radial-gradient(circle at 50% 40%, #000000 10%, var(--countdown-bg));
       border: 2px solid var(--gold);
       box-shadow: 0 0 20px var(--pharaoh-shadow), inset 0 0 10px var(--gold);
       border-radius: 16px;
-      padding: 1rem 1.4rem;
-      position: relative;
+      padding: 1rem 1.2rem;
+      min-width: 80px;
       text-shadow: 1px 1px 2px #000;
       transition: transform 0.3s ease;
     }
@@ -181,7 +163,7 @@
 
     .countdown-number {
       color: var(--gold);
-      font-size: clamp(2.8rem, 6vw, 4rem);
+      font-size: clamp(2rem, 5vw, 3rem);
       font-weight: bold;
     }
 
@@ -194,6 +176,7 @@
       color: var(--pharaoh-blue);
       font-weight: bold;
       letter-spacing: 2px;
+      font-size: clamp(0.7rem, 2vw, 1rem);
     }
 
     .footer {
@@ -204,7 +187,6 @@
       font-size: clamp(0.8rem, 1.8vw, 1rem);
       color: var(--color-footer);
       padding: 0.5em 0;
-      z-index: 10;
       background: transparent;
     }
 
