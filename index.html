@@ -47,6 +47,7 @@
       align-items: center;
       text-align: center;
       padding: 0 5vw;
+      min-height: 100vh;
     }
 
     .container {
@@ -138,23 +139,27 @@
 
     #countdown {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap; /* prevent wrapping */
       justify-content: center;
-      gap: 1rem;
+      gap: 0.8rem;
       margin-bottom: 5vh;
       opacity: 0;
       animation: fadeInUp 2.5s ease-in-out forwards;
+      overflow-x: auto; /* horizontal scroll if needed */
+      -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
     }
 
     .countdown-segment {
       background: radial-gradient(circle at 50% 40%, #000000 10%, var(--countdown-bg));
-      border: 2px solid var(--gold);
-      box-shadow: 0 0 20px var(--pharaoh-shadow), inset 0 0 10px var(--gold);
+      /*border: 2px solid var(--gold);*/
+      /*box-shadow: 0 0 20px var(--pharaoh-shadow), inset 0 0 10px var(--gold);*/
       border-radius: 16px;
-      padding: 1rem 1.2rem;
-      min-width: 80px;
+      padding: 0.6rem 1rem;
+      min-width: 60px;
+      flex-shrink: 1;
       text-shadow: 1px 1px 2px #000;
       transition: transform 0.3s ease;
+      white-space: nowrap; /* no wrap inside */
     }
 
     .countdown-segment:hover {
@@ -163,7 +168,7 @@
 
     .countdown-number {
       color: var(--gold);
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-size: clamp(1.5rem, 4vw, 3rem);
       font-weight: bold;
     }
 
@@ -175,8 +180,9 @@
     .countdown-label {
       color: var(--pharaoh-blue);
       font-weight: bold;
-      letter-spacing: 2px;
-      font-size: clamp(0.7rem, 2vw, 1rem);
+      letter-spacing: 1.5px;
+      font-size: clamp(0.65rem, 1.8vw, 0.9rem);
+      white-space: nowrap;
     }
 
     .footer {
