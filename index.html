@@ -5,14 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NetRaw | Store</title>
 
-  <!-- Favicon for all browsers (tabs) -->
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-
-  <!-- Safari & iOS bookmark icon -->
   <link rel="apple-touch-icon" href="favicon.png" />
-
-  <!-- Optional: Web manifest -->
   <link rel="manifest" href="site.webmanifest" />
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -22,10 +18,13 @@
       --color-subtext: #ccc;
       --color-muted: #aaa;
       --color-footer: #666;
-      --glow-color: rgba(255, 0, 0, 0.7);
-      --countdown-bg: rgba(255 255 255 / 0.1);
+      --glow-color: #efbf04;
+      --countdown-bg: rgba(255 255 255 / 0.05);
       --countdown-shadow: rgba(0 0 0 / 0.3);
-      --countdown-font: 'Courier New', Courier, monospace;
+      /*--countdown-font: 'Silom', sans-serif;*/
+      --gold: #d4af37;
+      --pharaoh-blue: #f2f2f2;
+      --pharaoh-shadow: rgba(212, 175, 55, 0.4);
     }
 
     * {
@@ -36,7 +35,6 @@
       height: 100vh;
       background: var(--color-bg);
       overscroll-behavior-y: contain;
-      -webkit-overflow-scrolling: touch;
     }
 
     body {
@@ -80,7 +78,7 @@
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: url('logo.png') no-repeat center/contain;
+      background: url('logo2.png') no-repeat center/contain;
       filter: blur(12px) brightness(2) drop-shadow(0 0 10px var(--glow-color));
       opacity: 0;
       animation: pulseGlow 3s ease-in-out infinite;
@@ -103,15 +101,14 @@
     }
 
     @keyframes pulseGlow {
-      0%   { opacity: 0; }
-      33%  { opacity: 1; }
-      66%  { opacity: 0; }
-      100% { opacity: 0; }
+      0%, 100% { opacity: 0; }
+      33% { opacity: 1; }
+      66% { opacity: 0; }
     }
 
-
     .brand-name,
-    .slogan {
+    .slogan,
+    .countdown-number {
       font-family: 'Silom', sans-serif;
     }
 
@@ -151,31 +148,52 @@
       margin-bottom: 5vh;
       opacity: 0;
       animation: fadeInUp 2.5s ease-in-out forwards;
+      position: relative;
     }
 
+/*    #countdown::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 10px;
+      background: radial-gradient(circle, var(--gold), transparent);
+      opacity: 0.4;
+      pointer-events: none;
+    }*/
+
     .countdown-segment {
-      background: var(--countdown-bg);
-      box-shadow: 0 4px 12px var(--countdown-shadow);
-      border-radius: 12px;
-      padding: 1rem 1.2rem;
-      min-width: 65px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: radial-gradient(circle at 50% 40%, #000000 10%, var(--countdown-bg));
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 20px var(--pharaoh-shadow), inset 0 0 10px var(--gold);
+      border-radius: 16px;
+      padding: 1rem 1.4rem;
+      position: relative;
+      text-shadow: 1px 1px 2px #000;
+      transition: transform 0.3s ease;
+    }
+
+    .countdown-segment:hover {
+      transform: scale(1.05);
     }
 
     .countdown-number {
-      font-size: clamp(2.4rem, 6vw, 3.5rem);
-      font-weight: 700;
-      line-height: 1;
+      color: var(--gold);
+      font-size: clamp(2.8rem, 6vw, 4rem);
+      font-weight: bold;
+    }
+
+    .countdown-label::before {
+      content: '☥ ';
+      color: var(--gold);
     }
 
     .countdown-label {
-      font-size: clamp(0.9rem, 2vw, 1.1rem);
-      color: var(--color-subtext);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-top: 0.3rem;
+      color: var(--pharaoh-blue);
+      font-weight: bold;
+      letter-spacing: 2px;
     }
 
     .footer {
@@ -264,7 +282,6 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Tab title animation
     const originalTitle = document.title;
     let blinkInterval = null;
     let welcomeTimeout = null;
