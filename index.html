@@ -23,10 +23,10 @@
   }
 
   html, body {
-    height: 100vh; /* fill viewport */
+    height: 100vh;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #000000, #1a1a1a);
+    background: var(--color-bg);
     overscroll-behavior-y: contain;
     -webkit-overflow-scrolling: touch;
     font-family: var(--font-main);
@@ -46,7 +46,6 @@
     align-items: center;
   }
 
-  /* Logo container in top third */
   .top-third {
     position: relative;
   }
@@ -63,11 +62,16 @@
   @media (max-width: 600px) {
     .logo-wrapper {
       width: 50vw;
-      min-width: auto;
+      min-width: 140px;
+    }
+    .brand-name {
+      font-size: 2rem;
+    }
+    .slogan {
+      font-size: 1rem;
     }
   }
 
-  /* Old glowing effect */
   .logo-wrapper::before {
     content: "";
     position: absolute;
@@ -91,6 +95,8 @@
 
   .middle-third {
     flex-direction: column;
+    text-align: center;
+    padding: 0 10px;
   }
 
   .brand-name,
@@ -101,14 +107,14 @@
   }
 
   .brand-name {
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-size: clamp(2rem, 6vw, 4rem);
     font-weight: bold;
     letter-spacing: 2px;
     margin-bottom: 1vh;
   }
 
   .slogan {
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-size: clamp(1rem, 3vw, 1.8rem);
     color: var(--color-subtext);
     letter-spacing: 1px;
     margin-bottom: 0;
@@ -118,10 +124,12 @@
 
   .bottom-third {
     flex-direction: column;
+    text-align: center;
+    padding: 0 10px;
   }
 
   .coming-soon {
-    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-size: clamp(1.2rem, 4vw, 2rem);
     font-weight: 500;
     margin-bottom: 1em;
     opacity: 0;
@@ -136,6 +144,7 @@
     color: var(--color-text);
     opacity: 0;
     animation: fadeInUp 2.5s ease-in-out forwards;
+    flex-wrap: wrap;
   }
 
   .countdown-segment {
@@ -143,20 +152,20 @@
     box-shadow: 0 4px 12px var(--countdown-shadow);
     border-radius: 12px;
     padding: 1rem 1.2rem;
-    min-width: 65px;
+    min-width: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
   .countdown-number {
-    font-size: clamp(2.4rem, 6vw, 3.5rem);
+    font-size: clamp(2rem, 6vw, 3.5rem);
     font-weight: 700;
     line-height: 1;
   }
 
   .countdown-label {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-size: clamp(0.8rem, 2vw, 1.1rem);
     color: var(--color-subtext);
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -176,14 +185,8 @@
   }
 
   @keyframes fadeSlideDown {
-    0% {
-      opacity: 0;
-      transform: translateY(-40px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(-40px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes pulseGlow {
@@ -216,7 +219,7 @@
 
   <div class="bottom-third">
     <div class="coming-soon">We're launching soon</div>
-    <div id="countdown" aria-label="Countdown to launch" role="timer" aria-live="polite">
+    <div id="countdown" role="timer" aria-live="polite">
       <div class="countdown-segment">
         <div class="countdown-number" id="days">0</div>
         <div class="countdown-label">Days</div>
@@ -272,7 +275,6 @@
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // Tab title animation from before
   const originalTitle = document.title;
   let blinkInterval = null;
   let welcomeTimeout = null;
@@ -286,7 +288,7 @@
 
   function startBlinkingTitle() {
     let i = 0;
-    if (blinkInterval) return; // prevent multiple
+    if (blinkInterval) return;
     blinkInterval = setInterval(() => {
       document.title = attentionTexts[i];
       i = (i + 1) % attentionTexts.length;
