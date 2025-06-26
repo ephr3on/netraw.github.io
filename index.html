@@ -1,204 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NetRaw | Store</title>
-<style>
-  /* No @font-face import here - keeps Silom if installed on device */
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NetRaw | Store</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    /* No @font-face import here - keeps Silom if installed on device */
 
-  :root {
-    --font-main: 'Inter', sans-serif;
-    --color-bg: linear-gradient(135deg, #000000, #1a1a1a);
-    --color-text: #f2f2f2;
-    --color-subtext: #ccc;
-    --color-muted: #aaa;
-    --color-footer: #666;
-    --glow-color: rgba(255, 215, 0, 0.7);
-    --countdown-bg: rgba(255 255 255 / 0.1);
-    --countdown-shadow: rgba(0 0 0 / 0.3);
-    --countdown-font: 'Courier New', Courier, monospace;
-  }
+    :root {
+      --font-main: 'Inter', sans-serif;
+      --color-bg: linear-gradient(135deg, #000000, #1a1a1a);
+      --color-text: #f2f2f2;
+      --color-subtext: #ccc;
+      --color-muted: #aaa;
+      --color-footer: #666;
+      --glow-color: rgba(255, 215, 0, 0.7);
+      --countdown-bg: rgba(255 255 255 / 0.1);
+      --countdown-shadow: rgba(0 0 0 / 0.3);
+      --countdown-font: 'Courier New', Courier, monospace;
+    }
 
-  * {
-    margin: 0; padding: 0; box-sizing: border-box;
-  }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
 
-  html, body {
-    height: 100vh; /* Fill viewport height */
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #000000, #1a1a1a);
-    overscroll-behavior-y: contain; /* Prevent overscroll bounce showing bg */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  }
+    html, body {
+      height: 100vh;
+      background: var(--color-bg);
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
+    }
 
-  body {
-    font-family: var(--font-main);
-    color: var(--color-text);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 100vh;
-    padding: 0 5vw;
-  }
+    body {
+      font-family: var(--font-main);
+      color: var(--color-text);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      padding: 0 5vw;
+    }
 
-  .container {
-    max-width: 800px;
-    width: 90vw;
-  }
+    .container {
+      max-width: 800px;
+      width: 90vw;
+    }
 
-  .top-section {
-    margin-bottom: 6vh;
-  }
+    .top-section {
+      margin-bottom: 6vh;
+    }
 
-  .logo-wrapper {
-    position: relative;
-    width: 30vw;
-    max-width: 300px;
-    min-width: 150px;
-    margin: 0 auto 3vh;
-    opacity: 0;
-    animation: fadeSlideDown 1.8s ease-out forwards;
-  }
-
-  @media (max-width: 600px) {
     .logo-wrapper {
-      width: 50vw;
-      min-width: auto;
-    }
-  }
-
-  /* OLD glowing effect on logo */
-  .logo-wrapper::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('logo.png') no-repeat center/contain;
-    filter: blur(12px) brightness(2) drop-shadow(0 0 10px var(--glow-color));
-    opacity: 0;
-    animation: pulseGlow 3s ease-in-out infinite;
-    animation-delay: 1.8s;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .logo {
-    position: relative;
-    width: 100%;
-    height: auto;
-    display: block;
-    z-index: 1;
-  }
-
-  @keyframes fadeSlideDown {
-    0% {
+      position: relative;
+      width: 30vw;
+      max-width: 300px;
+      min-width: 150px;
+      margin: 0 auto 3vh;
       opacity: 0;
-      transform: translateY(-40px);
+      animation: fadeSlideDown 1.8s ease-out forwards;
     }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
+
+    @media (max-width: 600px) {
+      .logo-wrapper {
+        width: 50vw;
+      }
     }
-  }
 
-  @keyframes pulseGlow {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
-  }
+    .logo-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('logo.png') no-repeat center/contain;
+      filter: blur(12px) brightness(2) drop-shadow(0 0 10px var(--glow-color));
+      opacity: 0;
+      animation: pulseGlow 3s ease-in-out infinite;
+      animation-delay: 1.8s;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-  .brand-name,
-  .slogan {
-    font-family: 'Silom', sans-serif;
-  }
+    .logo {
+      position: relative;
+      width: 100%;
+      height: auto;
+      display: block;
+      z-index: 1;
+    }
 
-  .brand-name {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 1vh;
-    opacity: 0;
-    animation: slideUp 1.8s ease-out forwards;
-  }
+    @keyframes fadeSlideDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  .slogan {
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    color: var(--color-subtext);
-    letter-spacing: 1px;
-    margin-bottom: 6vh;
-    opacity: 0;
-    animation: slideUp 1.8s ease-out forwards;
-    animation-delay: 0.1s;
-    animation-fill-mode: forwards;
-  }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
 
-  .coming-soon {
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    font-weight: 500;
-    margin-bottom: 1em;
-    animation: fadeInUp 2s ease-in-out forwards;
-  }
+    .brand-name,
+    .slogan {
+      font-family: 'Silom', sans-serif;
+    }
 
-  #countdown {
-    display: flex;
-    justify-content: center;
-    gap: 1.2rem;
-    font-family: var(--countdown-font);
-    color: var(--color-text);
-    margin-bottom: 5vh;
-    opacity: 0;
-    animation: fadeInUp 2.5s ease-in-out forwards;
-  }
+    .brand-name {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 1vh;
+      opacity: 0;
+      animation: slideUp 1.8s ease-out forwards;
+    }
 
-  .countdown-segment {
-    background: var(--countdown-bg);
-    box-shadow: 0 4px 12px var(--countdown-shadow);
-    border-radius: 12px;
-    padding: 1rem 1.2rem;
-    min-width: 65px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+    .slogan {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--color-subtext);
+      letter-spacing: 1px;
+      margin-bottom: 6vh;
+      opacity: 0;
+      animation: slideUp 1.8s ease-out forwards;
+      animation-delay: 0.1s;
+      animation-fill-mode: forwards;
+    }
 
-  .countdown-number {
-    font-size: clamp(2.4rem, 6vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1;
-  }
+    .coming-soon {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 500;
+      margin-bottom: 1em;
+      animation: fadeInUp 2s ease-in-out forwards;
+    }
 
-  .countdown-label {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    color: var(--color-subtext);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-top: 0.3rem;
-  }
+    #countdown {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      font-family: var(--countdown-font);
+      color: var(--color-text);
+      margin-bottom: 5vh;
+      opacity: 0;
+      animation: fadeInUp 2.5s ease-in-out forwards;
+    }
 
-  .footer {
-    position: fixed;
-    bottom: 1vh;
-    width: 100%;
-    text-align: center;
-    font-size: clamp(0.8rem, 1.8vw, 1rem);
-    color: var(--color-footer);
-    padding: 0.5em 0;
-    z-index: 10;
-    background: transparent; /* ensure no bg */
-  }
+    .countdown-segment {
+      background: var(--countdown-bg);
+      box-shadow: 0 4px 12px var(--countdown-shadow);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      min-width: 65px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+    .countdown-number {
+      font-size: clamp(2.4rem, 6vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1;
+    }
 
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-</style>
+    .countdown-label {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--color-subtext);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 0.3rem;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 1vh;
+      width: 100%;
+      text-align: center;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--color-footer);
+      padding: 0.5em 0;
+      z-index: 10;
+      background: transparent;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -267,7 +264,7 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Creative animated tab title on visibility change
+    // Tab title animation
     const originalTitle = document.title;
     let blinkInterval = null;
     let welcomeTimeout = null;
@@ -281,24 +278,21 @@
 
     function startBlinkingTitle() {
       let i = 0;
-      if (blinkInterval) return; // prevent multiple
+      if (blinkInterval) return;
       blinkInterval = setInterval(() => {
         document.title = attentionTexts[i];
         i = (i + 1) % attentionTexts.length;
-      }, 500); // every 500ms no delay
+      }, 500);
     }
 
     function stopBlinkingTitle() {
       clearInterval(blinkInterval);
       blinkInterval = null;
-
-      // Show "Welcome back!" before returning original title
       document.title = 'Welcome back! ❤️';
-
       clearTimeout(welcomeTimeout);
       welcomeTimeout = setTimeout(() => {
         document.title = originalTitle;
-      }, 1500); // show welcome back for 1.5 seconds
+      }, 1500);
     }
 
     document.addEventListener('visibilitychange', () => {
