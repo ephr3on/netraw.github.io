@@ -1,115 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NetRaw | Coming Soon</title>
-  <style>
-    @font-face {
-      font-family: 'Silom';
-      src: local('Silom'), local('Silom-Regular');
-      font-style: normal;
-      font-weight: normal;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NetRaw | Coming Soon</title>
+<style>
+  :root {
+    --font-main: 'Silom', 'Inter', sans-serif;
+    --color-bg: linear-gradient(135deg, #000000, #1a1a1a);
+    --color-text: #f2f2f2;
+    --color-subtext: #ccc;
+    --color-muted: #aaa;
+    --color-footer: #666;
+    --glow-color: rgba(255, 255, 255, 0.6); /* subtle white glow */
+  }
 
-    :root {
-      --font-main: 'Silom', 'Inter', sans-serif;
-      --color-text: #f2f2f2;
-      --color-sub: #ccc;
-      --color-countdown: #aaa;
-      --color-footer: #666;
-    }
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  body {
+    font-family: var(--font-main);
+    background: var(--color-bg);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    padding: 4vh 5vw;
+  }
 
-    body {
-      font-family: var(--font-main);
-      background: linear-gradient(135deg, #000000, #1a1a1a);
-      color: var(--color-text);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 20px;
-    }
+  .container {
+    max-width: 800px;
+    width: 90vw;
+  }
 
-    .container {
-      width: 100%;
-      max-width: 800px;
-      animation: fadeIn 1.5s ease-in-out;
-    }
+  .top-section {
+    margin-bottom: 8vh;
+  }
 
-    .top-section {
-      margin-bottom: 80px;
-    }
+  /* Logo container with pulsing white glow */
+  .logo-wrapper {
+    position: relative;
+    width: 30vw;
+    max-width: 300px;
+    min-width: 150px;
+    margin: 0 auto;
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
 
-    .logo {
-      width: 300px;
-      height: 300px;
-      margin: 0 auto 1em auto;
-      background-image: url('logo.png'); /* Replace with your logo */
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
+  /* The actual logo image */
+  .logo {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    filter: drop-shadow(0 0 6px var(--glow-color));
+    /* Subtle white glow */
+  }
 
-    .brand-name {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: bold;
-      margin-bottom: 0.4em;
-      letter-spacing: 2px;
+  @keyframes pulseGlow {
+    0%, 100% {
+      filter: drop-shadow(0 0 6px var(--glow-color));
+      opacity: 1;
     }
+    50% {
+      filter: drop-shadow(0 0 0px transparent);
+      opacity: 0.7;
+    }
+  }
 
-    .slogan {
-      font-size: clamp(1.2rem, 3vw, 1.6rem);
-      font-weight: normal;
-      color: var(--color-sub);
-      letter-spacing: 1px;
-    }
+  .brand-name {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: bold;
+    margin-top: 2vh;
+    letter-spacing: 2px;
+    animation: slideUp 1.6s ease-out forwards;
+  }
 
-    .coming-soon {
-      font-size: clamp(1.4rem, 4vw, 2rem);
-      font-weight: 500;
-      margin-bottom: 1em;
-    }
+  .slogan {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--color-subtext);
+    margin-top: 1vh;
+    letter-spacing: 1px;
+    animation: slideUp 1.8s ease-out forwards;
+  }
 
-    .countdown {
-      font-size: clamp(1.1rem, 3vw, 1.5rem);
-      font-weight: 300;
-      color: var(--color-countdown);
-    }
+  .coming-soon {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 500;
+    margin-bottom: 1em;
+    animation: fadeInUp 2s ease-in-out forwards;
+  }
 
-    .footer {
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 0.95rem;
-      color: var(--color-footer);
-    }
+  .countdown {
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: var(--color-muted);
+    animation: fadeInUp 2.5s ease-in-out forwards;
+  }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  .footer {
+    position: fixed;
+    bottom: 1vh;
+    width: 100%;
+    text-align: center;
+    font-size: clamp(0.8rem, 1.8vw, 1rem);
+    color: var(--color-footer);
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
 </head>
 <body>
   <div class="container">
     <div class="top-section">
-      <div class="logo"></div>
+      <div class="logo-wrapper">
+        <img src="logo.png" alt="NetRaw Logo" class="logo" />
+      </div>
       <div class="brand-name">NetRaw</div>
       <div class="slogan">AWAKENED to RISE</div>
     </div>
 
     <div class="coming-soon">We're launching soon</div>
-    <div class="countdown" id="countdown">Loading countdown...</div>
+    <div class="countdown" id="countdown">Loading...</div>
   </div>
 
   <div class="footer">© 2025 NetRaw. All rights reserved.</div>
