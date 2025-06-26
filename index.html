@@ -4,12 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NetRaw | Store</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon2.png" />
-  <link rel="apple-touch-icon" href="favicon2.png" />
+
+  <!-- Favicon for all browsers -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <!-- For Safari bookmarks / iOS home screen -->
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <!-- Optional Manifest for full support -->
+  <link rel="manifest" href="site.webmanifest" />
 
   <style>
-    /* No @font-face import here - keeps Silom if installed on device */
-
     :root {
       --font-main: 'Inter', sans-serif;
       --color-bg: linear-gradient(135deg, #000000, #1a1a1a);
@@ -244,10 +247,6 @@
       const diff = launchDate - now;
 
       if (diff <= 0) {
-        daysEl.textContent = '0';
-        hoursEl.textContent = '0';
-        minutesEl.textContent = '0';
-        secondsEl.textContent = '0';
         document.getElementById('countdown').textContent = "We're live!";
         return;
       }
