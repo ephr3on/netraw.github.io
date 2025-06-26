@@ -3,17 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NetRaw | Coming Soon</title>
+<title>NetRaw | Store</title>
 <style>
-  @font-face {
-    font-family: 'Silom';
-    src: url('Silom.woff2') format('woff2'),
-         url('Silom.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
+  /* No @font-face import here - keeps Silom if installed on device */
+  
   :root {
     --font-main: 'Inter', sans-serif;
     --color-bg: linear-gradient(135deg, #000000, #1a1a1a);
@@ -67,7 +60,6 @@
     animation: fadeSlideDown 1.8s ease-out forwards;
   }
 
-  /* Responsive for phones: logo 1/2 screen width */
   @media (max-width: 600px) {
     .logo-wrapper {
       width: 50vw;
@@ -112,7 +104,6 @@
     50% { opacity: 1; }
   }
 
-  /* Silom font for brand name and slogan */
   .brand-name,
   .slogan {
     font-family: 'Silom', sans-serif;
@@ -145,7 +136,6 @@
     animation: fadeInUp 2s ease-in-out forwards;
   }
 
-  /* Countdown styling */
   #countdown {
     display: flex;
     justify-content: center;
@@ -189,6 +179,8 @@
     text-align: center;
     font-size: clamp(0.8rem, 1.8vw, 1rem);
     color: var(--color-footer);
+    padding: 0.5em 0;
+    z-index: 10;
   }
 
   @keyframes slideUp {
@@ -268,6 +260,48 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // Creative animated tab title on visibility change
+    const originalTitle = document.title;
+    let blinkInterval = null;
+    let welcomeTimeout = null;
+    const attentionTexts = [
+      '🔥 COME BACK !! BABE 🔥',
+      '👋 cOmE bAcK !! bAbE 👋',
+      '⭐ Come Back !! Babe ⭐',
+      '⚡ COME BACK !! BABE ⚡',
+      '✨ cOme BAcK !! bAbE ✨'
+    ];
+
+    function startBlinkingTitle() {
+      let i = 0;
+      if (blinkInterval) return; // prevent multiple
+      blinkInterval = setInterval(() => {
+        document.title = attentionTexts[i];
+        i = (i + 1) % attentionTexts.length;
+      }, 500); // every 500ms no delay
+    }
+
+    function stopBlinkingTitle() {
+      clearInterval(blinkInterval);
+      blinkInterval = null;
+
+      // Show "Welcome back!" before returning original title
+      document.title = 'Welcome back! ❤️';
+
+      clearTimeout(welcomeTimeout);
+      welcomeTimeout = setTimeout(() => {
+        document.title = originalTitle;
+      }, 1500); // show welcome back for 1.5 seconds
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        startBlinkingTitle();
+      } else {
+        stopBlinkingTitle();
+      }
+    });
   </script>
 </body>
 </html>
