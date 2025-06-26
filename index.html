@@ -82,7 +82,7 @@
       background: url('logo.png') no-repeat center/contain;
       filter: blur(12px) brightness(2) drop-shadow(0 0 10px var(--glow-color));
       opacity: 0;
-      animation: pulseGlow 3s ease-in-out infinite;
+      animation: pulseGlow 8s ease-in-out infinite;
       animation-delay: 1.8s;
       z-index: 0;
       pointer-events: none;
@@ -102,8 +102,7 @@
 
     @keyframes pulseGlow {
       0%, 100% { opacity: 0; }
-      33% { opacity: 1; }
-      66% { opacity: 0; }
+      50% { opacity: 1; }
     }
 
     .brand-name, .slogan, .countdown-number {
