@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NetRaw | Store</title>
 <style>
+  /* No @font-face import here - keeps Silom if installed on device */
+
   :root {
     --font-main: 'Inter', sans-serif;
     --color-bg: linear-gradient(135deg, #000000, #1a1a1a);
@@ -23,31 +25,33 @@
   }
 
   html, body {
-    height: 100vh;
+    height: 100vh; /* Fill viewport height */
     margin: 0;
     padding: 0;
-    background: var(--color-bg);
-    overscroll-behavior-y: contain;
-    -webkit-overflow-scrolling: touch;
-    font-family: var(--font-main);
-    color: var(--color-text);
+    background: linear-gradient(135deg, #000000, #1a1a1a);
+    overscroll-behavior-y: contain; /* Prevent overscroll bounce showing bg */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
   }
 
   body {
+    font-family: var(--font-main);
+    color: var(--color-text);
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-  }
-
-  .top-third, .middle-third, .bottom-third {
-    height: 33.33vh;
-    display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    padding: 0 5vw;
   }
 
-  .top-third {
-    position: relative;
+  .container {
+    max-width: 800px;
+    width: 90vw;
+  }
+
+  .top-section {
+    margin-bottom: 6vh;
   }
 
   .logo-wrapper {
@@ -55,6 +59,7 @@
     width: 30vw;
     max-width: 300px;
     min-width: 150px;
+    margin: 0 auto 3vh;
     opacity: 0;
     animation: fadeSlideDown 1.8s ease-out forwards;
   }
@@ -62,16 +67,11 @@
   @media (max-width: 600px) {
     .logo-wrapper {
       width: 50vw;
-      min-width: 140px;
-    }
-    .brand-name {
-      font-size: 2rem;
-    }
-    .slogan {
-      font-size: 1rem;
+      min-width: auto;
     }
   }
 
+  /* OLD glowing effect on logo */
   .logo-wrapper::before {
     content: "";
     position: absolute;
@@ -93,46 +93,51 @@
     z-index: 1;
   }
 
-  .middle-third {
-    flex-direction: column;
-    text-align: center;
-    padding: 0 10px;
+  @keyframes fadeSlideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
   }
 
   .brand-name,
   .slogan {
     font-family: 'Silom', sans-serif;
+  }
+
+  .brand-name {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 1vh;
     opacity: 0;
     animation: slideUp 1.8s ease-out forwards;
   }
 
-  .brand-name {
-    font-size: clamp(2rem, 6vw, 4rem);
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 1vh;
-  }
-
   .slogan {
-    font-size: clamp(1rem, 3vw, 1.8rem);
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
     color: var(--color-subtext);
     letter-spacing: 1px;
-    margin-bottom: 0;
+    margin-bottom: 6vh;
+    opacity: 0;
+    animation: slideUp 1.8s ease-out forwards;
     animation-delay: 0.1s;
     animation-fill-mode: forwards;
   }
 
-  .bottom-third {
-    flex-direction: column;
-    text-align: center;
-    padding: 0 10px;
-  }
-
   .coming-soon {
-    font-size: clamp(1.2rem, 4vw, 2rem);
+    font-size: clamp(1.4rem, 4vw, 2rem);
     font-weight: 500;
     margin-bottom: 1em;
-    opacity: 0;
     animation: fadeInUp 2s ease-in-out forwards;
   }
 
@@ -142,9 +147,9 @@
     gap: 1.2rem;
     font-family: var(--countdown-font);
     color: var(--color-text);
+    margin-bottom: 5vh;
     opacity: 0;
     animation: fadeInUp 2.5s ease-in-out forwards;
-    flex-wrap: wrap;
   }
 
   .countdown-segment {
@@ -152,20 +157,20 @@
     box-shadow: 0 4px 12px var(--countdown-shadow);
     border-radius: 12px;
     padding: 1rem 1.2rem;
-    min-width: 60px;
+    min-width: 65px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
   .countdown-number {
-    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-size: clamp(2.4rem, 6vw, 3.5rem);
     font-weight: 700;
     line-height: 1;
   }
 
   .countdown-label {
-    font-size: clamp(0.8rem, 2vw, 1.1rem);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
     color: var(--color-subtext);
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -181,17 +186,7 @@
     color: var(--color-footer);
     padding: 0.5em 0;
     z-index: 10;
-    background: transparent;
-  }
-
-  @keyframes fadeSlideDown {
-    0% { opacity: 0; transform: translateY(-40px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulseGlow {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
+    background: transparent; /* ensure no bg */
   }
 
   @keyframes slideUp {
@@ -206,20 +201,17 @@
 </style>
 </head>
 <body>
-  <div class="top-third">
-    <div class="logo-wrapper">
-      <img src="logo.png" alt="NetRaw Logo" class="logo" />
+  <div class="container">
+    <div class="top-section">
+      <div class="logo-wrapper">
+        <img src="logo.png" alt="NetRaw Logo" class="logo" />
+      </div>
+      <div class="brand-name">NetRaw</div>
+      <div class="slogan">AWAKENED to RISE</div>
     </div>
-  </div>
 
-  <div class="middle-third">
-    <div class="brand-name">NetRaw</div>
-    <div class="slogan">AWAKENED to RISE</div>
-  </div>
-
-  <div class="bottom-third">
     <div class="coming-soon">We're launching soon</div>
-    <div id="countdown" role="timer" aria-live="polite">
+    <div id="countdown" aria-label="Countdown to launch" role="timer" aria-live="polite">
       <div class="countdown-segment">
         <div class="countdown-number" id="days">0</div>
         <div class="countdown-label">Days</div>
@@ -241,77 +233,81 @@
 
   <div class="footer">© 2025 NetRaw. All rights reserved.</div>
 
-<script>
-  const launchDate = new Date("2025-10-10T00:00:00");
-  const daysEl = document.getElementById("days");
-  const hoursEl = document.getElementById("hours");
-  const minutesEl = document.getElementById("minutes");
-  const secondsEl = document.getElementById("seconds");
+  <script>
+    const launchDate = new Date("2025-10-10T00:00:00");
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
 
-  function updateCountdown() {
-    const now = new Date();
-    const diff = launchDate - now;
+    function updateCountdown() {
+      const now = new Date();
+      const diff = launchDate - now;
 
-    if (diff <= 0) {
-      daysEl.textContent = '0';
-      hoursEl.textContent = '0';
-      minutesEl.textContent = '0';
-      secondsEl.textContent = '0';
-      document.getElementById('countdown').textContent = "We're live!";
-      return;
+      if (diff <= 0) {
+        daysEl.textContent = '0';
+        hoursEl.textContent = '0';
+        minutesEl.textContent = '0';
+        secondsEl.textContent = '0';
+        document.getElementById('countdown').textContent = "We're live!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      daysEl.textContent = days;
+      hoursEl.textContent = hours.toString().padStart(2, '0');
+      minutesEl.textContent = minutes.toString().padStart(2, '0');
+      secondsEl.textContent = seconds.toString().padStart(2, '0');
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
-    daysEl.textContent = days;
-    hoursEl.textContent = hours.toString().padStart(2, '0');
-    minutesEl.textContent = minutes.toString().padStart(2, '0');
-    secondsEl.textContent = seconds.toString().padStart(2, '0');
-  }
+    // Creative animated tab title on visibility change
+    const originalTitle = document.title;
+    let blinkInterval = null;
+    let welcomeTimeout = null;
+    const attentionTexts = [
+      '🔥 COME BACK !! BABE 🔥',
+      '👋 cOmE bAcK !! bAbE 👋',
+      '⭐ Come Back !! Babe ⭐',
+      '⚡ COME BACK !! BABE ⚡',
+      '✨ cOme BAcK !! bAbE ✨'
+    ];
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-  const originalTitle = document.title;
-  let blinkInterval = null;
-  let welcomeTimeout = null;
-  const attentionTexts = [
-    '🔥 COME BACK !! BABE 🔥',
-    '👋 cOmE bAcK !! bAbE 👋',
-    '⭐ Come Back !! Babe ⭐',
-    '⚡ COME BACK !! BABE ⚡',
-    '✨ cOme BAcK !! bAbE ✨'
-  ];
-
-  function startBlinkingTitle() {
-    let i = 0;
-    if (blinkInterval) return;
-    blinkInterval = setInterval(() => {
-      document.title = attentionTexts[i];
-      i = (i + 1) % attentionTexts.length;
-    }, 500);
-  }
-
-  function stopBlinkingTitle() {
-    clearInterval(blinkInterval);
-    blinkInterval = null;
-    document.title = 'Welcome back! ❤️';
-    clearTimeout(welcomeTimeout);
-    welcomeTimeout = setTimeout(() => {
-      document.title = originalTitle;
-    }, 1500);
-  }
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      startBlinkingTitle();
-    } else {
-      stopBlinkingTitle();
+    function startBlinkingTitle() {
+      let i = 0;
+      if (blinkInterval) return; // prevent multiple
+      blinkInterval = setInterval(() => {
+        document.title = attentionTexts[i];
+        i = (i + 1) % attentionTexts.length;
+      }, 500); // every 500ms no delay
     }
-  });
-</script>
+
+    function stopBlinkingTitle() {
+      clearInterval(blinkInterval);
+      blinkInterval = null;
+
+      // Show "Welcome back!" before returning original title
+      document.title = 'Welcome back! ❤️';
+
+      clearTimeout(welcomeTimeout);
+      welcomeTimeout = setTimeout(() => {
+        document.title = originalTitle;
+      }, 1500); // show welcome back for 1.5 seconds
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        startBlinkingTitle();
+      } else {
+        stopBlinkingTitle();
+      }
+    });
+  </script>
 </body>
 </html>
