@@ -22,7 +22,7 @@
       --color-subtext: #ccc;
       --color-muted: #aaa;
       --color-footer: #666;
-      --glow-color: rgba(255, 215, 0, 0.7);
+      --glow-color: rgba(255, 255, 255, 0.7);
       --countdown-bg: rgba(255 255 255 / 0.1);
       --countdown-shadow: rgba(0 0 0 / 0.3);
       --countdown-font: 'Courier New', Courier, monospace;
@@ -80,14 +80,15 @@
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: url('logo.png') no-repeat center/contain;
-      filter: blur(12px) brightness(2) drop-shadow(0 0 10px var(--glow-color));
+      background: radial-gradient(circle, var(--glow-color) 0%, transparent 60%);
+      filter: blur(40px);
       opacity: 0;
       animation: pulseGlow 3s ease-in-out infinite;
       animation-delay: 1.8s;
       z-index: 0;
       pointer-events: none;
     }
+
 
     .logo {
       position: relative;
