@@ -60,6 +60,8 @@
     max-width: 300px;
     min-width: 150px;
     margin: 0 auto 3vh;
+    opacity: 0;
+    animation: fadeSlideDown 1.8s ease-out forwards;
   }
 
   .logo-wrapper::before {
@@ -70,6 +72,7 @@
     filter: blur(12px) brightness(2) drop-shadow(0 0 10px var(--glow-color));
     opacity: 0;
     animation: pulseGlow 3s ease-in-out infinite;
+    animation-delay: 1.8s; /* glow starts right after fade+slide */
     z-index: 0;
     pointer-events: none;
   }
@@ -80,6 +83,17 @@
     height: auto;
     display: block;
     z-index: 1;
+  }
+
+  @keyframes fadeSlideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @keyframes pulseGlow {
@@ -98,7 +112,8 @@
     font-weight: bold;
     letter-spacing: 2px;
     margin-bottom: 1vh;
-    animation: slideUp 1.6s ease-out forwards;
+    opacity: 0;
+    animation: slideUp 1.8s ease-out forwards;
   }
 
   .slogan {
@@ -106,7 +121,10 @@
     color: var(--color-subtext);
     letter-spacing: 1px;
     margin-bottom: 6vh;
+    opacity: 0;
     animation: slideUp 1.8s ease-out forwards;
+    animation-delay: 0.1s;
+    animation-fill-mode: forwards;
   }
 
   .coming-soon {
@@ -129,11 +147,6 @@
     text-align: center;
     font-size: clamp(0.8rem, 1.8vw, 1rem);
     color: var(--color-footer);
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
   }
 
   @keyframes slideUp {
