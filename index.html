@@ -11,9 +11,9 @@
   <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="152x152" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="120x120" href="favicon.png" />
-  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#d4af37">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#d4af37" />
   <link rel="manifest" href="site.webmanifest" />
-  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -128,29 +128,6 @@
       animation-fill-mode: forwards;
     }
 
-    .contact-button {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.75em 1.5em;
-      background: transparent;
-      border: 2px solid var(--gold);
-      color: var(--gold);
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-      opacity: 0;
-      animation: slideUp 1.8s ease-out forwards;
-      animation-delay: 0.2s;
-    }
-
-    .contact-button:hover {
-      background: var(--gold);
-      color: #000;
-      box-shadow: 0 0 8px var(--glow-color);
-    }
-
     #countdown {
       display: flex;
       flex-wrap: nowrap;
@@ -195,6 +172,124 @@
       white-space: nowrap;
     }
 
+    .contact-button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75em 1.5em;
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      opacity: 0;
+      animation: slideUp 1.8s ease-out forwards;
+      animation-delay: 0.2s;
+      cursor: pointer;
+    }
+
+    .contact-button:hover {
+      background: var(--gold);
+      color: #000;
+      box-shadow: 0 0 8px var(--glow-color);
+    }
+
+    /* Modal styles */
+    .contact-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .contact-modal-content {
+      background: #1a1a1a;
+      border: 2px solid var(--gold);
+      color: var(--color-text);
+      padding: 2rem;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 12px var(--glow-color);
+      animation: slideUp 0.5s ease forwards;
+      position: relative;
+    }
+
+    .contact-modal-content h2 {
+      margin-bottom: 1rem;
+      color: var(--gold);
+    }
+
+    .contact-modal-content input,
+    .contact-modal-content textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      background: #000;
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      color: var(--color-text);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    .contact-modal-content button {
+      padding: 0.75rem 1.5rem;
+      background: var(--gold);
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s;
+      font-size: 1rem;
+    }
+
+    .contact-modal-content button:hover {
+      background: #fff3b0;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 1.5rem;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes slideUp {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeSlideDown {
+      0% { opacity: 0; transform: translateY(-40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
     .footer {
       position: fixed;
       bottom: 1vh;
@@ -204,16 +299,6 @@
       color: var(--color-footer);
       padding: 0.5em 0;
       background: transparent;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -246,12 +331,27 @@
     </div>
 
     <!-- Contact Button -->
-    <a href="mailto:info@netraw.net" class="contact-button">Contact Us</a>
+    <a href="#" class="contact-button" id="openContact">Contact Us</a>
+  </div>
+
+  <!-- Contact Modal -->
+  <div class="contact-modal" id="contactModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+    <div class="contact-modal-content">
+      <span class="close-button" id="closeContact" aria-label="Close contact form">&times;</span>
+      <h2 id="contactTitle">Contact Us</h2>
+      <form>
+        <input type="text" placeholder="Your Name" required aria-required="true" />
+        <input type="email" placeholder="Your Email" required aria-required="true" />
+        <textarea placeholder="Your Message" rows="4" required aria-required="true"></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </div>
   </div>
 
   <div class="footer">© 2025 NetRaw. All rights reserved.</div>
 
   <script>
+    // Countdown script
     const launchDate = new Date("2025-10-10T00:00:00");
     const daysEl = document.getElementById("days");
     const hoursEl = document.getElementById("hours");
@@ -281,6 +381,7 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
+    // Title blinking on tab hidden
     const originalTitle = document.title;
     let blinkInterval = null;
     let welcomeTimeout = null;
@@ -317,6 +418,38 @@
       } else {
         stopBlinkingTitle();
       }
+    });
+
+    // Contact modal script
+    const openBtn = document.getElementById('openContact');
+    const modal = document.getElementById('contactModal');
+    const closeBtn = document.getElementById('closeContact');
+
+    openBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // Optional: prevent form submission for demo
+    document.querySelector('.contact-modal form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you for your message! (This form does not actually send emails yet.)');
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      e.target.reset();
     });
   </script>
 </body>
