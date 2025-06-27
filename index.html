@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NetRaw | Store</title>
 
-  <!-- Standard favicon -->
+  <!-- Favicon & Manifest -->
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
@@ -21,14 +21,10 @@
       --color-bg: linear-gradient(135deg, #000000, #1a1a1a);
       --color-text: #f2f2f2;
       --color-subtext: #ccc;
-      --color-muted: #aaa;
       --color-footer: #666;
       --glow-color: #efbf04;
-      --countdown-bg: rgba(255, 255, 255, 0.05);
-      --countdown-shadow: rgba(0, 0, 0, 0.3);
       --gold: #d4af37;
       --pharaoh-blue: #f2f2f2;
-      --pharaoh-shadow: rgba(212, 175, 55, 0.4);
     }
 
     * {
@@ -144,6 +140,9 @@
       border-radius: 10px;
       transition: all 0.3s ease;
       font-size: 1rem;
+      opacity: 0;
+      animation: slideUp 1.8s ease-out forwards;
+      animation-delay: 0.2s;
     }
 
     .contact-button:hover {
@@ -226,10 +225,7 @@
     <div class="brand-name">NetRaw</div>
     <div class="slogan">AWAKENED to RISE</div>
 
-    <!-- ✨ Contact Button -->
-    <a href="mailto:info@netraw.net" class="contact-button">Contact Us</a>
-
-    <!-- ⏳ Countdown -->
+    <!-- Countdown -->
     <div id="countdown" aria-label="Countdown to launch" role="timer" aria-live="polite">
       <div class="countdown-segment">
         <div class="countdown-number" id="days">0</div>
@@ -248,6 +244,9 @@
         <div class="countdown-label">Seconds</div>
       </div>
     </div>
+
+    <!-- Contact Button -->
+    <a href="mailto:info@netraw.net" class="contact-button">Contact Us</a>
   </div>
 
   <div class="footer">© 2025 NetRaw. All rights reserved.</div>
