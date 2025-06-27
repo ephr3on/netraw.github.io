@@ -7,18 +7,11 @@
 
   <!-- Standard favicon -->
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
-
-  <!-- PNG fallback -->
   <link rel="icon" type="image/png" href="favicon.png" />
-
-  <!-- Apple Touch -->
   <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="152x152" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="120x120" href="favicon.png" />
-
-  <!-- Safari pinned tab (optional but nice) -->
   <link rel="mask-icon" href="safari-pinned-tab.svg" color="#d4af37">
-
   <link rel="manifest" href="site.webmanifest" />
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
@@ -69,7 +62,7 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      gap: 6vh; /* Equal vertical space between all elements */
+      gap: 6vh;
     }
 
     .logo-wrapper {
@@ -139,15 +132,35 @@
       animation-fill-mode: forwards;
     }
 
+    .contact-button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.75em 1.5em;
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .contact-button:hover {
+      background: var(--gold);
+      color: #000;
+      box-shadow: 0 0 8px var(--glow-color);
+    }
+
     #countdown {
       display: flex;
-      flex-wrap: nowrap; /* prevent wrapping */
+      flex-wrap: nowrap;
       justify-content: center;
       gap: 0.8rem;
       opacity: 0;
       animation: fadeInUp 2.5s ease-in-out forwards;
-      overflow-x: auto; /* horizontal scroll if needed */
-      -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .countdown-segment {
@@ -157,7 +170,7 @@
       flex-shrink: 1;
       text-shadow: 1px 1px 2px #000;
       transition: transform 0.3s ease;
-      white-space: nowrap; /* no wrap inside */
+      white-space: nowrap;
     }
 
     .countdown-segment:hover {
@@ -213,6 +226,10 @@
     <div class="brand-name">NetRaw</div>
     <div class="slogan">AWAKENED to RISE</div>
 
+    <!-- ✨ Contact Button -->
+    <a href="mailto:info@netraw.net" class="contact-button">Contact Us</a>
+
+    <!-- ⏳ Countdown -->
     <div id="countdown" aria-label="Countdown to launch" role="timer" aria-live="polite">
       <div class="countdown-segment">
         <div class="countdown-number" id="days">0</div>
