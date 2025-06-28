@@ -6,13 +6,10 @@
   <title>NetRaw | Store</title>
 
   <!-- Favicon & Manifest -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
-  <link rel="apple-touch-icon" sizes="152x152" href="favicon.png" />
-  <link rel="apple-touch-icon" sizes="120x120" href="favicon.png" />
-  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#d4af37">
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="favicon.png" />
   <link rel="manifest" href="site.webmanifest" />
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#d4af37">
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
   <style>
@@ -27,7 +24,7 @@
       --pharaoh-blue: #f2f2f2;
     }
 
-    * {
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -36,7 +33,6 @@
     html, body {
       height: 100%;
       background: var(--color-bg);
-      overscroll-behavior-y: contain;
     }
 
     body {
@@ -48,7 +44,6 @@
       align-items: center;
       text-align: center;
       padding: 0 5vw;
-      min-height: 100vh;
     }
 
     .container {
@@ -56,7 +51,6 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       align-items: center;
       gap: 6vh;
     }
@@ -70,21 +64,6 @@
       animation: fadeSlideDown 1.8s ease-out forwards;
     }
 
-    @media (max-width: 500px) {
-      .countdown-segment {
-        padding: 0.4rem 0.5rem;
-        min-width: 50px;
-      }
-
-      .countdown-number {
-        font-size: 1.3rem;
-      }
-
-      .countdown-label {
-        font-size: 0.65rem;
-      }
-    }
-
     @media (max-width: 600px) {
       .logo-wrapper {
         width: 50vw;
@@ -94,7 +73,7 @@
     .logo-wrapper::before {
       content: "";
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       background: url('logo.png') no-repeat center/contain;
       filter: blur(12px) brightness(2) drop-shadow(0 0 10px var(--glow-color));
       opacity: 0;
@@ -106,19 +85,8 @@
 
     .logo {
       width: 100%;
-      height: auto;
-      z-index: 1;
       position: relative;
-    }
-
-    @keyframes fadeSlideDown {
-      0% { opacity: 0; transform: translateY(-40px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
+      z-index: 1;
     }
 
     .brand-name, .slogan, .countdown-number {
@@ -140,21 +108,19 @@
       opacity: 0;
       animation: slideUp 1.8s ease-out forwards;
       animation-delay: 0.1s;
-      animation-fill-mode: forwards;
     }
 
     .contact-button {
-      display: inline-block;
       margin-top: 1rem;
       padding: 0.75em 1.5em;
       background: transparent;
       border: 2px solid var(--gold);
       color: var(--gold);
       font-weight: bold;
-      text-decoration: none;
       border-radius: 10px;
       transition: all 0.3s ease;
       font-size: 1rem;
+      text-decoration: none !important;
       opacity: 0;
       animation: slideUp 1.8s ease-out forwards;
       animation-delay: 0.2s;
@@ -206,7 +172,19 @@
       font-weight: bold;
       letter-spacing: 1.5px;
       font-size: clamp(0.65rem, 1.8vw, 0.9rem);
-      white-space: nowrap;
+    }
+
+    @media (max-width: 500px) {
+      .countdown-segment {
+        padding: 0.4rem 0.5rem;
+        min-width: 50px;
+      }
+      .countdown-number {
+        font-size: 1.3rem;
+      }
+      .countdown-label {
+        font-size: 0.65rem;
+      }
     }
 
     .footer {
@@ -216,8 +194,16 @@
       text-align: center;
       font-size: clamp(0.8rem, 1.8vw, 1rem);
       color: var(--color-footer);
-      padding: 0.5em 0;
-      background: transparent;
+    }
+
+    @keyframes fadeSlideDown {
+      0% { opacity: 0; transform: translateY(-40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
     }
 
     @keyframes slideUp {
@@ -239,27 +225,13 @@
     <div class="brand-name">NetRaw</div>
     <div class="slogan">AWAKENED to RISE</div>
 
-    <!-- Countdown -->
-    <div id="countdown" aria-label="Countdown to launch" role="timer" aria-live="polite">
-      <div class="countdown-segment">
-        <div class="countdown-number" id="days">0</div>
-        <div class="countdown-label">Days</div>
-      </div>
-      <div class="countdown-segment">
-        <div class="countdown-number" id="hours">0</div>
-        <div class="countdown-label">Hours</div>
-      </div>
-      <div class="countdown-segment">
-        <div class="countdown-number" id="minutes">0</div>
-        <div class="countdown-label">Minutes</div>
-      </div>
-      <div class="countdown-segment">
-        <div class="countdown-number" id="seconds">0</div>
-        <div class="countdown-label">Seconds</div>
-      </div>
+    <div id="countdown" role="timer" aria-live="polite">
+      <div class="countdown-segment"><div class="countdown-number" id="days">0</div><div class="countdown-label">Days</div></div>
+      <div class="countdown-segment"><div class="countdown-number" id="hours">0</div><div class="countdown-label">Hours</div></div>
+      <div class="countdown-segment"><div class="countdown-number" id="minutes">0</div><div class="countdown-label">Minutes</div></div>
+      <div class="countdown-segment"><div class="countdown-number" id="seconds">0</div><div class="countdown-label">Seconds</div></div>
     </div>
 
-    <!-- Contact Button -->
     <a href="mailto:info@netraw.net" class="contact-button">Contact Us</a>
   </div>
 
@@ -275,17 +247,14 @@
     function updateCountdown() {
       const now = new Date();
       const diff = launchDate - now;
-
       if (diff <= 0) {
         document.getElementById('countdown').textContent = "We're live!";
         return;
       }
-
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
-
       daysEl.textContent = days;
       hoursEl.textContent = hours.toString().padStart(2, '0');
       minutesEl.textContent = minutes.toString().padStart(2, '0');
@@ -294,44 +263,6 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
-
-    const originalTitle = document.title;
-    let blinkInterval = null;
-    let welcomeTimeout = null;
-    const attentionTexts = [
-      '🔥 COME BACK !! BABE 🔥',
-      '👋 cOmE bAcK !! bAbE 👋',
-      '😘 Come Back !! Babe 😘',
-      '🌹 COME BACK !! BABE 🌹',
-      '🥺 cOme BAcK !! bAbE 🥺'
-    ];
-
-    function startBlinkingTitle() {
-      let i = 0;
-      if (blinkInterval) return;
-      blinkInterval = setInterval(() => {
-        document.title = attentionTexts[i];
-        i = (i + 1) % attentionTexts.length;
-      }, 500);
-    }
-
-    function stopBlinkingTitle() {
-      clearInterval(blinkInterval);
-      blinkInterval = null;
-      document.title = 'Welcome back! ❤️';
-      clearTimeout(welcomeTimeout);
-      welcomeTimeout = setTimeout(() => {
-        document.title = originalTitle;
-      }, 1500);
-    }
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        startBlinkingTitle();
-      } else {
-        stopBlinkingTitle();
-      }
-    });
   </script>
 </body>
 </html>
