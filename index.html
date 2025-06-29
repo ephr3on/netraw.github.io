@@ -266,6 +266,44 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+        const originalTitle = document.title;
+    let blinkInterval = null;
+    let welcomeTimeout = null;
+    const attentionTexts = [
+      '🔥 COME BACK !! BABE 🔥',
+      '👋 cOmE bAcK !! bAbE 👋',
+      '😘 Come Back !! Babe 😘',
+      '🌹 COME BACK !! BABE 🌹',
+      '🥺 cOme BAcK !! bAbE 🥺'
+    ];
+
+    function startBlinkingTitle() {
+      let i = 0;
+      if (blinkInterval) return;
+      blinkInterval = setInterval(() => {
+        document.title = attentionTexts[i];
+        i = (i + 1) % attentionTexts.length;
+      }, 500);
+    }
+
+    function stopBlinkingTitle() {
+      clearInterval(blinkInterval);
+      blinkInterval = null;
+      document.title = 'Welcome back! ❤️';
+      clearTimeout(welcomeTimeout);
+      welcomeTimeout = setTimeout(() => {
+        document.title = originalTitle;
+      }, 1500);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        startBlinkingTitle();
+      } else {
+        stopBlinkingTitle();
+      }
+    });
   </script>
 </body>
 </html>
