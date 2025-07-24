@@ -5,23 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NetRaw | Store</title>
 
-  <!-- SEO Meta Description -->
   <meta name="description" content="NetRaw — AWAKENED to RISE — for those who search for meaning, move with intention, and rise to shape what’s next.">
-
-  <!-- Open Graph (Social Media Preview) -->
   <meta property="og:title" content="NetRaw" />
   <meta property="og:description" content="AWAKENED to RISE — a movement for those who search for meaning, move with intention, and rise to shape what’s next." />
   <meta property="og:image" content="https://netraw.net/logo.png" />
   <meta property="og:url" content="https://netraw.net" />
   <meta property="og:type" content="website" />
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="NetRaw" />
   <meta name="twitter:description" content="AWAKENED to RISE — a movement for those who search for meaning, move with intention, and rise to shape what’s next." />
   <meta name="twitter:image" content="https://netraw.net/logo.png" />
 
-  <!-- Structured Data for SEO -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -30,13 +24,10 @@
     "url": "https://netraw.net",
     "description": "AWAKENED to RISE — a movement for those who search for meaning, move with intention, and rise to shape what’s next.",
     "logo": "https://netraw.net/logo.png",
-    "sameAs": [
-      "https://www.instagram.com/elnetraw"
-    ]
+    "sameAs": ["https://www.instagram.com/elnetraw"]
   }
   </script>
 
-  <!-- Favicon & Manifest -->
   <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="shortcut icon" href="/favicon.ico" />
@@ -45,6 +36,7 @@
   <link rel="manifest" href="/site.webmanifest" />
 
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.8.0/suncalc.min.js"></script>
 
   <style>
     :root {
@@ -254,7 +246,7 @@
 <body>
   <div class="container">
     <div class="logo-wrapper">
-      <img src="logo.png" alt="NetRaw Logo" class="logo" />
+      <img src="logo.png" alt="NetRaw Logo" class="logo" loading="lazy" />
     </div>
     <div class="brand-name">NetRaw</div>
     <div class="slogan">AWAKENED to RISE</div>
@@ -272,33 +264,67 @@
   <div class="footer">© 2025 NetRaw. All rights reserved.</div>
 
   <script>
-    const launchDate = new Date("2025-10-10T00:00:00");
+    const countdown = document.getElementById("countdown");
     const daysEl = document.getElementById("days");
     const hoursEl = document.getElementById("hours");
     const minutesEl = document.getElementById("minutes");
     const secondsEl = document.getElementById("seconds");
 
-    function updateCountdown() {
+    function getSunTimes(date, lat, lon) {
+      return SunCalc.getTimes(date, lat, lon);
+    }
+
+    function updateCountdownToSunrise(lat, lon) {
       const now = new Date();
-      const diff = launchDate - now;
+      let sunrise = getSunTimes(now, lat, lon).sunrise;
+
+      if (now >= sunrise) {
+        const tomorrow = new Date();
+        tomorrow.setDate(now.getDate() + 1);
+        sunrise = getSunTimes(tomorrow, lat, lon).sunrise;
+      }
+
+      const diff = sunrise - now;
+
       if (diff <= 0) {
-        document.getElementById('countdown').textContent = "We're live!";
+        countdown.innerHTML = "<div class='slogan'>☀️ It’s your time. Rise.</div>";
         return;
       }
+
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
+
       daysEl.textContent = days;
       hoursEl.textContent = hours.toString().padStart(2, '0');
       minutesEl.textContent = minutes.toString().padStart(2, '0');
       secondsEl.textContent = seconds.toString().padStart(2, '0');
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    function startCountdownUsingIP() {
+      fetch("https://ipapi.co/json")
+        .then(response => response.json())
+        .then(data => {
+          const latitude = data.latitude;
+          const longitude = data.longitude;
 
-        const originalTitle = document.title;
+          if (!latitude || !longitude) {
+            countdown.innerHTML = "<div class='slogan'>☀️ Sunrise data unavailable.</div>";
+            return;
+          }
+
+          updateCountdownToSunrise(latitude, longitude);
+          setInterval(() => updateCountdownToSunrise(latitude, longitude), 1000);
+        })
+        .catch(() => {
+          countdown.innerHTML = "<div class='slogan'>☀️ Could not determine location.</div>";
+        });
+    }
+
+    startCountdownUsingIP();
+
+    const originalTitle = document.title;
     let blinkInterval = null;
     let welcomeTimeout = null;
     const attentionTexts = [
